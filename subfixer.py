@@ -207,8 +207,25 @@ def cli(input, output, fix_persian, shift):
         click.echo('New subtitle is on : %s' % write_file_name)
 
     if shift:
-        pass
+        new_lines = []
+        with open(input, 'r') as f:
+            for line in f.readlines():
+                line = line[:-2]  # removes '\r\n' from line
+                if is_time_string(line):
+                    times = line.split(' --> ')  # split up the two times
+                    new_times = []
+                    for t in times:
+                        new_times.append(process_time_string(t, shift))
+                    line = new_times[0] + ' --> ' + new_times[1]
+                new_lines.append(line + '\r\n')  # adds back in '\r\n'
 
+        write_file_name = input[:-4] + '_fixed.srt'
 
+        if output:
+            write_file_name = output
+        with open(write_file_name, 'w') as f:
+            for line in new_lines:
+                f.write(line)
 
-
+        click.echo('%s Time shift done for ' % input)
+        click.echo('New subtitle is on : %s' % write_file_name)
