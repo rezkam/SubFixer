@@ -170,10 +170,8 @@ def is_time_string(s):
 @click.command()
 @click.argument('input', type=click.Path(exists=True))
 @click.argument('output', type=click.Path(), required=False)
-@click.option('--fix_persian', is_flag=True, help='Decode Unicode and \
-                                    fix issues with Persian')
-@click.option('--shift', type=int, help='The change in seconds \
-                    to shift the subtitles, e.g. --shift 2 or --shift -5')
+@click.option('--fix_persian', is_flag=True, help='Decode Unicode and fix issues with Persian')
+@click.option('--shift', type=int, help='The change in seconds to shift the subtitles, e.g. --shift 2 or --shift -5')
 def cli(input, output, fix_persian, shift):
     '''
         SubFixer does a bit of string manipulation and datetime math
