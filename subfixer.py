@@ -67,6 +67,8 @@ class SubtitleFixer:
                 string += line
             elif re.match(r"^\d+$", line[:-1]):
                 string += line
+            elif re.match(r"<.*>.*<\/.*>", line):
+                string += line
             else:
                 # this should be subtitle
                 s = re.match(r"^([\.!?]*)", line)
@@ -78,6 +80,7 @@ class SubtitleFixer:
 
                 # use persian numbers
                 for i in range(0, 10):
+                    re.sub("\d", self.number[i], line)
                     line = line.replace(str(i), self.number[i])
 
                 # for ltr problems some peoples put "-" on EOL
